@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Яндекс диск</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Показ файлов в Яндекс Диске</h1>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+
+      {% if error %}
+        <div class="alert alert-danger mt-3">{{ error }}</div>
+      {% endif %}
+      
+      {% if files %}
+        <h3 class="mt-5">Список файлов:</h3>
+        <ul class="list-group mt-3">
+          {% for file in files %}
+            <li class="list-group-item">
+              <strong>{{ file.name }}</strong> ({{ file.mime_type }})
+              <a href="{{ file.file }}" class="btn btn-sm btn-success float-right" download>Скачать</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </body>
+</html>
